@@ -6,12 +6,18 @@
 </head>
 <body>
 <h1>My Library</h1>
-    <ul>
-        <li>{{all_books["title"]}}</li>
-        <li>{{all_books["author"]}}</li>
-        <li>{{all_books["rating"]}}</li>
-    </ul>
-    
+    {% if all_books == [] %}
+        <p>Library is empty</p>
+    {% endif %}
+        <ul>
+            {% for dict in all_books %}
+                <li>
+                    {{ dict["title"] }} - 
+                    {{ dict["author"] }} - 
+                    {{ dict["rating"] }}
+                </li>
+            {% endfor %}
+        </ul>
 <a href="{{url_for('add')}}">Add New Book</a>
 </body>
 </html>
