@@ -7,9 +7,11 @@
 <body>
 <h1>My Library</h1>
     <ul>
-        <li></li>
+        <li>{{all_books["title"]}}</li>
+        <li>{{all_books["author"]}}</li>
+        <li>{{all_books["rating"]}}</li>
     </ul>
     
-<a href="">Add New Book</a>
+<a href="{{url_for('add')}}">Add New Book</a>
 </body>
 </html>
