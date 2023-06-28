@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///books.db"
 
-all_books = []
 db = SQLAlchemy(app)
 
 
@@ -19,13 +18,13 @@ class books(db.Model):
         self.author = author
         self.rating = rating
 
-# with app.app_context():
-    # db.create_all()
-
 @app.route('/')
 def home():
-    print(all_books)
-    return render_template("index.html", all_books=all_books)
+    # print(all_books)
+    with app.app_context():
+        result = db.session.execute(db.select(books).order_by("id"))
+        all_books = result.scalars()
+        return render_template("index.html", all_books=all_books)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -36,6 +35,9 @@ def add():
             "author": request.form["author"],
             "rating": request.form["rating"],
         }
-        all_books.append(data)
-        print(all_books)
+
+        new_book = books(title=data["title"], author=data["author"], rating=data["rating"])
+        db.session.add(new_book)
+        db.session.commit()
+
     return render_template("add.html")

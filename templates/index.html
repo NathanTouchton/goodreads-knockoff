@@ -10,11 +10,11 @@
         <p>Library is empty</p>
     {% endif %}
         <ul>
-            {% for dict in all_books %}
+            {% for book in all_books %}
                 <li>
-                    {{ dict["title"] }} - 
-                    {{ dict["author"] }} - 
-                    {{ dict["rating"] }}
+                    Title: {{book.title}} - 
+                    Author: {{book.author}} - 
+                    Rating: {{book.rating}}
                 </li>
             {% endfor %}
         </ul>
